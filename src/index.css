@@ -10,3 +10,9 @@
     @apply text-blue-100;
   }
 }
+
+@layer components {
+  .toast-icon {
+    @apply fill-white h-[2rem] w-[2rem];
+  }
+}

@@ -5,6 +5,10 @@ interface IPositionStype {
   };
 }
 
+interface IStatusStyle {
+  [key: string]: string;
+}
+
 const positionStyle: IPositionStype = {
   'top-left': {
     place: 'top-[4rem] left-[4rem]',
@@ -32,4 +36,10 @@ const positionStyle: IPositionStype = {
   },
 };
 
-export { positionStyle };
+const statusStyle: IStatusStyle = {
+  Success: 'bg-[#07bc0c]',
+  Warning: 'bg-[#f1c40f]',
+  Error: 'bg-[#e74c3c]',
+};
+
+export { positionStyle, statusStyle };

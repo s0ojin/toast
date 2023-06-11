@@ -21,6 +21,7 @@ function ToastList({
           id={toast.id}
           message={toast.message}
           delay={toast.delay}
+          status={toast.status}
           position={position}
           setToastList={setToastList}
           toastList={toastList}

@@ -1,13 +1,17 @@
 import React, { useCallback, useEffect } from 'react';
-import { positionStyle } from 'src/style/toastStyle';
+import { positionStyle, statusStyle } from 'src/style/toastStyle';
 import { ReactComponent as CloseIcon } from 'src/assets/close.svg';
 import { IFormInput, IToastList } from '@/App';
+import { ReactComponent as SuccessIcon } from 'src/assets/success.svg';
+import { ReactComponent as WarningIcon } from 'src/assets/warning.svg';
+import { ReactComponent as ErrorIcon } from 'src/assets/error.svg';
 
 interface IToastProps {
   position: string;
   message: string;
   delay: string | null;
   id: number;
+  status: string;
   toastList: IFormInput[];
   setToastList: React.Dispatch<React.SetStateAction<IToastList>>;
 }
@@ -17,6 +21,7 @@ function Toast({
   message,
   delay,
   id,
+  status,
   setToastList,
   toastList,
 }: IToastProps) {
@@ -40,10 +45,17 @@ function Toast({
     };
   }, []);
 
+  const displayIcon = () => {
+    if (status === 'Success') return <SuccessIcon className="toast-icon" />;
+    if (status === 'Warning') return <WarningIcon className="toast-icon" />;
+    if (status === 'Error') return <ErrorIcon className="toast-icon" />;
+  };
+
   return (
     <div
-      className={`relative flex h-[6rem] w-[30rem] ${positionStyle[position].animation} items-center justify-center rounded-md bg-black-100`}>
-      <p className="text-white">{message}</p>
+      className={`relative flex h-[6rem] w-[30rem] ${positionStyle[position].animation} items-center rounded-md p-4 ${statusStyle[status]}`}>
+      {displayIcon()}
+      <p className="ml-[1rem] text-[14px] text-white">{message}</p>
       <button
         onClick={() => closeToastMessage(id)}
         className="absolute right-3 top-3 p-2">

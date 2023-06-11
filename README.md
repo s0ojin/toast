@@ -20,4 +20,4 @@
 
 [x] Clear all button
 
-[ ] Status variation of Toast Message UI(Success, Warning, Error)
+[x] Status variation of Toast Message UI(Success, Warning, Error)

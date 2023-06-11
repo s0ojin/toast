@@ -6,6 +6,7 @@ export interface IFormInput {
   position: string;
   delay: string | null;
   message: string;
+  status: string;
 }
 
 export interface IToastList {
@@ -22,6 +23,7 @@ function App() {
     'bottom-center',
     'bottom-right',
   ];
+  const STATUS = ['Success', 'Warning', 'Error'];
   const [toastList, setToastList] = useState<IToastList>({
     'top-left': [],
     'top-center': [],
@@ -39,6 +41,13 @@ function App() {
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
   ];
+
+  const statusRefs = [
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+  ];
+
   const delayRef = useRef<HTMLInputElement>(null);
 
   const showToastMessage = useCallback(
@@ -48,11 +57,17 @@ function App() {
           .map(({ current }) => current)
           .find((current) => current?.checked)?.value || 'top-left';
 
+      const statusRef =
+        statusRefs
+          .map(({ current }) => current)
+          .find((current) => current?.checked)?.value || 'Success';
+
       const toastOptions = {
         position: positionRef,
         delay: delayRef.current?.value || null,
         id: Date.now(),
         message: message,
+        status: statusRef,
       };
 
       setToastList((toastList) => ({
@@ -95,6 +110,24 @@ function App() {
                 />
                 <label className="text-Body" htmlFor={position}>
                   {position}
+                </label>
+              </div>
+            ))}
+          </section>
+          <section className="flex flex-col gap-[1rem]">
+            <h2 className="text-SubTitle">Status</h2>
+            {STATUS.map((status, index) => (
+              <div key={status}>
+                <input
+                  ref={statusRefs[index]}
+                  name="Status"
+                  type="radio"
+                  id={status}
+                  value={status}
+                  defaultChecked={status === 'Success' && true}
+                />
+                <label className="text-Body" htmlFor={status}>
+                  {status}
                 </label>
               </div>
             ))}
