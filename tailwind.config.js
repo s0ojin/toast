@@ -17,6 +17,12 @@ module.exports = {
         30: '#E7E7E7',
         10: '#F5F5F5',
       },
+      blue: {
+        100: '#0a2961',
+        50: '#898cae',
+        30: '#d7d7e3',
+        10: '#f0f0f5',
+      },
       white: '#FFFFFF',
     },
     fontSize: {
