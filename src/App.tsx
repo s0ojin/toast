@@ -9,8 +9,10 @@ export interface IFormInput {
 }
 
 function App() {
+  const [toastList, setToastList] = useState<IFormInput[]>([]);
+
   const [formValue, setFormValue] = useState({
-    position: '',
+    position: 'top-left',
     delay: '3000',
   });
 
@@ -20,6 +22,15 @@ function App() {
       ...formValue,
       [name]: value,
     }));
+  };
+
+  const showToastMessage = (message: string) => {
+    const toastOptions = {
+      ...formValue,
+      id: toastList.length,
+      message: message,
+    };
+    setToastList([...toastList, toastOptions]);
   };
 
   return (
@@ -119,12 +130,13 @@ function App() {
           </section>
           <button
             type="submit"
+            onClick={() => showToastMessage('메세지를 변경하겠습니다.')}
             className="absolute bottom-10 left-10 h-[6rem] w-[20rem] rounded-2xl bg-blue-100 text-Body text-white">
             Toast Button
           </button>
         </form>
       </div>
-      <Toast />
+      <Toast toastList={toastList} setToastList={setToastList} />
     </>
   );
 }
