@@ -1,13 +1,7 @@
-import { IToastList } from '@/App';
 import React, { useCallback, useEffect } from 'react';
+import { IToastList } from '@/App';
+import { positionStyle } from '@/style/toastStyle';
 import { ReactComponent as CloseIcon } from 'src/assets/close.svg';
-
-interface IPositionStype {
-  [key: string]: {
-    place: string;
-    animation: string;
-  };
-}
 
 function Toast({
   toastList,
@@ -18,33 +12,6 @@ function Toast({
   setToastList: React.Dispatch<React.SetStateAction<IToastList>>;
   position: string;
 }) {
-  const positionStyle: IPositionStype = {
-    'top-left': {
-      place: 'top-[4rem] left-[4rem]',
-      animation: 'animate-toast-left',
-    },
-    'top-center': {
-      place: 'top-[4rem] right-[50%] translate-x-[50%]',
-      animation: 'animate-toast-top',
-    },
-    'top-right': {
-      place: 'top-[4rem] right-[4rem]',
-      animation: 'animate-toast-right',
-    },
-    'bottom-left': {
-      place: 'bottom-[4rem] left-[4rem]',
-      animation: 'animate-toast-left',
-    },
-    'bottom-center': {
-      place: 'bottom-[4rem] right-[50%] translate-x-[50%]',
-      animation: 'animate-toast-bottom',
-    },
-    'bottom-right': {
-      place: 'bottom-[4rem] right-[4rem]',
-      animation: 'animate-toast-right',
-    },
-  };
-
   const closeToastMessage = useCallback(
     (toastId: number) => {
       const newToastList = toastList[position].filter(
