@@ -55,6 +55,17 @@ function App() {
     [toastList],
   );
 
+  const clearAllToastMessage = () => {
+    setToastList({
+      'top-left': [],
+      'top-center': [],
+      'top-right': [],
+      'bottom-left': [],
+      'bottom-center': [],
+      'bottom-right': [],
+    });
+  };
+
   return (
     <>
       <div className="flex h-screen w-screen flex-col items-center justify-center bg-blue-10">
@@ -156,17 +167,20 @@ function App() {
             Toast Button
           </button>
         </form>
+        <button
+          onClick={clearAllToastMessage}
+          className="absolute bottom-10 right-10 h-[6rem] w-[20rem] rounded-2xl bg-blue-100 text-Body text-white">
+          Clear
+        </button>
       </div>
-      <>
-        {Object.keys(toastList).map((toasts) => (
-          <ToastList
-            key={toasts}
-            toastList={toastList[toasts]}
-            setToastList={setToastList}
-            position={toasts}
-          />
-        ))}
-      </>
+      {Object.keys(toastList).map((toasts) => (
+        <ToastList
+          key={toasts}
+          toastList={toastList[toasts]}
+          setToastList={setToastList}
+          position={toasts}
+        />
+      ))}
     </>
   );
 }

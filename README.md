@@ -12,14 +12,12 @@
 
 [x] Make showToastMessage function and trigger toast message button
 
----
-
 ## Advanced features (Optional)
 
 [ ] Pause delay on hover toast message
 
 [ ] Progress bar with animation
 
-[ ] Clear all button
+[x] Clear all button
 
 [ ] Status variation of Toast Message UI(Success, Warning, Error)
