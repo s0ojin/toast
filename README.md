@@ -6,7 +6,7 @@
 
 [x] Make change autoClose “delay” (default is 3000ms) by handler : such as input number.
 
-[ ] If “delay” is null, then disable autoClose
+[x] If “delay” is null, then disable autoClose
 
 [x] Make close button in Toast Message
 

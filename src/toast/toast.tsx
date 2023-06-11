@@ -37,12 +37,14 @@ function Toast({
   );
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      closeToastMessage(id);
-    }, Number(delay));
-    return () => {
-      clearTimeout(timer);
-    };
+    if (delay) {
+      const timer = setTimeout(() => {
+        closeToastMessage(id);
+      }, Number(delay));
+      return () => {
+        clearTimeout(timer);
+      };
+    }
   }, []);
 
   const displayIcon = () => {
