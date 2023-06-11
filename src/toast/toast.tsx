@@ -39,13 +39,13 @@ function Toast({
   useEffect(() => {
     if (delay) {
       const timer = setTimeout(() => {
-        closeToastMessage(id);
+        if (toastList.length) closeToastMessage(toastList[0].id);
       }, Number(delay));
       return () => {
         clearTimeout(timer);
       };
     }
-  }, []);
+  }, [toastList]);
 
   const displayIcon = () => {
     if (status === 'Success') return <SuccessIcon className="toast-icon" />;
