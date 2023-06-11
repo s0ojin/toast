@@ -16,7 +16,7 @@
 
 [ ] Pause delay on hover toast message
 
-[ ] Progress bar with animation
+[x] Progress bar with animation
 
 [x] Clear all button
 

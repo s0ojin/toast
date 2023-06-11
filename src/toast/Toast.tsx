@@ -5,6 +5,7 @@ import { IFormInput, IToastList } from '@/App';
 import { ReactComponent as SuccessIcon } from 'src/assets/success.svg';
 import { ReactComponent as WarningIcon } from 'src/assets/warning.svg';
 import { ReactComponent as ErrorIcon } from 'src/assets/error.svg';
+import ProgressBar from 'src/toast/ProgressBar';
 
 interface IToastProps {
   position: string;
@@ -55,7 +56,7 @@ function Toast({
 
   return (
     <div
-      className={`relative flex h-[6rem] w-[30rem] ${positionStyle[position].animation} items-center rounded-md p-4 ${statusStyle[status]}`}>
+      className={`relative flex h-[6rem] w-[30rem] overflow-hidden ${positionStyle[position].animation} items-center rounded-md p-4 ${statusStyle[status]}`}>
       {displayIcon()}
       <p className="ml-[1rem] text-[14px] text-white">{message}</p>
       <button
@@ -63,6 +64,7 @@ function Toast({
         className="absolute right-3 top-3 p-2">
         <CloseIcon className="h-[1rem] w-[1rem] fill-white" />
       </button>
+      <ProgressBar delay={delay} />
     </div>
   );
 }
