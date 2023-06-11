@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import ToastList from './toast/ToastList';
+import ToastList from 'src/toast/ToastList';
 
 export interface IFormInput {
   id: number;
@@ -14,6 +14,14 @@ export interface IToastList {
 
 function App() {
   console.log('rerendering');
+  const POSITIONS = [
+    'top-left',
+    'top-center',
+    'top-right',
+    'bottom-left',
+    'bottom-center',
+    'bottom-right',
+  ];
   const [toastList, setToastList] = useState<IToastList>({
     'top-left': [],
     'top-center': [],
@@ -75,79 +83,21 @@ function App() {
           className="flex h-[30%] w-[50%] items-center justify-evenly rounded-2xl bg-white">
           <section className="flex flex-col gap-[1rem]">
             <h2 className="text-SubTitle">Position</h2>
-            <div>
-              <input
-                ref={positionRefs[0]}
-                name="position"
-                type="radio"
-                id="top-left"
-                value="top-left"
-                defaultChecked={true}
-              />
-              <label className="text-Body" htmlFor="top-left">
-                top-left
-              </label>
-            </div>
-            <div>
-              <input
-                ref={positionRefs[1]}
-                name="position"
-                type="radio"
-                id="top-center"
-                value="top-center"
-              />
-              <label className="text-Body" htmlFor="top-center">
-                top-center
-              </label>
-            </div>
-            <div>
-              <input
-                ref={positionRefs[2]}
-                name="position"
-                type="radio"
-                id="top-right"
-                value="top-right"
-              />
-              <label className="text-Body" htmlFor="top-right">
-                top-right
-              </label>
-            </div>
-            <div>
-              <input
-                ref={positionRefs[3]}
-                name="position"
-                type="radio"
-                id="bottom-left"
-                value="bottom-left"
-              />
-              <label className="text-Body" htmlFor="bottom-left">
-                bottom-left
-              </label>
-            </div>
-            <div>
-              <input
-                ref={positionRefs[4]}
-                name="position"
-                type="radio"
-                id="bottom-center"
-                value="bottom-center"
-              />
-              <label className="text-Body" htmlFor="bottom-center">
-                bottom-center
-              </label>
-            </div>
-            <div>
-              <input
-                ref={positionRefs[5]}
-                name="position"
-                type="radio"
-                id="bottom-right"
-                value="bottom-right"
-              />
-              <label className="text-Body" htmlFor="bottom-right">
-                bottom-right
-              </label>
-            </div>
+            {POSITIONS.map((position, index) => (
+              <div key={position}>
+                <input
+                  ref={positionRefs[index]}
+                  name="position"
+                  type="radio"
+                  id={position}
+                  value={position}
+                  defaultChecked={position === 'top-left' && true}
+                />
+                <label className="text-Body" htmlFor={position}>
+                  {position}
+                </label>
+              </div>
+            ))}
           </section>
           <section>
             <h2 className="mb-[1rem] text-SubTitle">Delay(ms)</h2>
