@@ -3,11 +3,29 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
+      keyframes: {
+        'toast-right': {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(0%)' },
+        },
+        'toast-left': {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0%)' },
+        },
+        'toast-top': {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(0%)' },
+        },
+        'toast-bottom': {
+          '0%': { transform: 'translateY(100%)' },
+          '100%': { transform: 'translateY(0%)' },
+        },
+      },
       animation: {
-        'toast-bottom':
-          'toast-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
-        'toast-top':
-          'toast-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
+        'toast-right': 'toast-right 0.5s',
+        'toast-left': 'toast-left 0.5s',
+        'toast-top': 'toast-top 0.5s',
+        'toast-bottom': 'toast-bottom 0.5s',
       },
     },
     colors: {
