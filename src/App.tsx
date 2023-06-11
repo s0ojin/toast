@@ -1,37 +1,59 @@
-import React, { useState } from 'react';
-import Toast from 'src/toast/toast';
+import React, { useCallback, useRef, useState } from 'react';
+import ToastList from './toast/ToastList';
 
 export interface IFormInput {
   id: number;
   position: string;
-  delay: string;
+  delay: string | null;
   message: string;
 }
 
-function App() {
-  const [toastList, setToastList] = useState<IFormInput[]>([]);
+export interface IToastList {
+  [key: string]: IFormInput[];
+}
 
-  const [formValue, setFormValue] = useState({
-    position: 'top-left',
-    delay: '3000',
+function App() {
+  console.log('rerendering');
+  const [toastList, setToastList] = useState<IToastList>({
+    'top-left': [],
+    'top-center': [],
+    'top-right': [],
+    'bottom-left': [],
+    'bottom-center': [],
+    'bottom-right': [],
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormValue((formValue) => ({
-      ...formValue,
-      [name]: value,
-    }));
-  };
+  const positionRefs = [
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+  ];
+  const delayRef = useRef<HTMLInputElement>(null);
 
-  const showToastMessage = (message: string) => {
-    const toastOptions = {
-      ...formValue,
-      id: toastList.length,
-      message: message,
-    };
-    setToastList([...toastList, toastOptions]);
-  };
+  const showToastMessage = useCallback(
+    (message: string) => {
+      const positionRef =
+        positionRefs
+          .map(({ current }) => current)
+          .find((current) => current?.checked)?.value || 'top-left';
+
+      const toastOptions = {
+        position: positionRef,
+        delay: delayRef.current?.value || null,
+        id: Date.now(),
+        message: message,
+      };
+
+      setToastList((toastList) => ({
+        ...toastList,
+        [positionRef]: [...toastList[positionRef], toastOptions],
+      }));
+    },
+    [toastList],
+  );
 
   return (
     <>
@@ -44,12 +66,11 @@ function App() {
             <h2 className="text-SubTitle">Position</h2>
             <div>
               <input
+                ref={positionRefs[0]}
                 name="position"
                 type="radio"
                 id="top-left"
                 value="top-left"
-                onInput={handleChange}
-                required
                 defaultChecked={true}
               />
               <label className="text-Body" htmlFor="top-left">
@@ -58,11 +79,11 @@ function App() {
             </div>
             <div>
               <input
+                ref={positionRefs[1]}
                 name="position"
                 type="radio"
                 id="top-center"
                 value="top-center"
-                onInput={handleChange}
               />
               <label className="text-Body" htmlFor="top-center">
                 top-center
@@ -70,11 +91,11 @@ function App() {
             </div>
             <div>
               <input
+                ref={positionRefs[2]}
                 name="position"
                 type="radio"
                 id="top-right"
                 value="top-right"
-                onInput={handleChange}
               />
               <label className="text-Body" htmlFor="top-right">
                 top-right
@@ -82,11 +103,11 @@ function App() {
             </div>
             <div>
               <input
+                ref={positionRefs[3]}
                 name="position"
                 type="radio"
                 id="bottom-left"
                 value="bottom-left"
-                onInput={handleChange}
               />
               <label className="text-Body" htmlFor="bottom-left">
                 bottom-left
@@ -94,11 +115,11 @@ function App() {
             </div>
             <div>
               <input
+                ref={positionRefs[4]}
                 name="position"
                 type="radio"
                 id="bottom-center"
                 value="bottom-center"
-                onInput={handleChange}
               />
               <label className="text-Body" htmlFor="bottom-center">
                 bottom-center
@@ -106,11 +127,11 @@ function App() {
             </div>
             <div>
               <input
+                ref={positionRefs[5]}
                 name="position"
                 type="radio"
                 id="bottom-right"
                 value="bottom-right"
-                onInput={handleChange}
               />
               <label className="text-Body" htmlFor="bottom-right">
                 bottom-right
@@ -120,9 +141,9 @@ function App() {
           <section>
             <h2 className="mb-[1rem] text-SubTitle">Delay(ms)</h2>
             <input
+              ref={delayRef}
               type="number"
               name="delay"
-              onChange={handleChange}
               defaultValue={3000}
               step={1000}
               className="rounded-lg bg-blue-10 p-[0.5rem] text-Body"
@@ -136,7 +157,16 @@ function App() {
           </button>
         </form>
       </div>
-      <Toast toastList={toastList} setToastList={setToastList} />
+      <>
+        {Object.keys(toastList).map((toasts) => (
+          <ToastList
+            key={toasts}
+            toastList={toastList[toasts]}
+            setToastList={setToastList}
+            position={toasts}
+          />
+        ))}
+      </>
     </>
   );
 }
