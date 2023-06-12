@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    @apply text-[62.5%];
+  }
+  body {
+    @apply text-blue-100;
+  }
+}
+
+@layer components {
+  .toast-icon {
+    @apply fill-white h-[2rem] w-[2rem];
+  }
+}
