@@ -14,7 +14,6 @@ export interface IToastList {
 }
 
 function App() {
-  console.log('rerendering');
   const POSITIONS = [
     'top-left',
     'top-center',
