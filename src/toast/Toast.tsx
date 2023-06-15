@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { positionStyle, statusStyle } from 'src/style/toastStyle';
 import { ReactComponent as CloseIcon } from 'src/assets/close.svg';
 import { IFormInput, IToastList } from '@/App';
@@ -24,34 +24,29 @@ function Toast({
   id,
   status,
   setToastList,
-  toastList,
 }: IToastProps) {
-  const [show, setShow] = useState(true);
-
   const closeToastMessage = (toastId: number) => {
-    const newToastList = toastList.filter((toast) => toast.id !== toastId);
-    setToastList((toastList) => ({
-      ...toastList,
-      [position]: newToastList,
-    }));
+    setToastList((toastList) => {
+      const newToastList = toastList[position].filter(
+        (toast) => toast.id !== toastId,
+      );
+      return {
+        ...toastList,
+        [position]: newToastList,
+      };
+    });
   };
 
   useEffect(() => {
     if (delay) {
       const timer = setTimeout(() => {
-        setShow(false);
+        closeToastMessage(id);
       }, Number(delay));
       return () => {
         clearTimeout(timer);
       };
     }
   }, []);
-
-  useEffect(() => {
-    if (!show) {
-      closeToastMessage(id);
-    }
-  }, [show]);
 
   const displayIcon = () => {
     if (status === 'Success') return <SuccessIcon className="toast-icon" />;
@@ -61,19 +56,17 @@ function Toast({
 
   return (
     <>
-      {show && (
-        <div
-          className={`relative flex h-[6rem] w-[30rem] overflow-hidden ${positionStyle[position].animation} items-center rounded-md p-4 ${statusStyle[status]}`}>
-          {displayIcon()}
-          <p className="ml-[1rem] text-[14px] text-white">{message}</p>
-          <button
-            onClick={() => closeToastMessage(id)}
-            className="absolute right-3 top-3 p-2">
-            <CloseIcon className="h-[1rem] w-[1rem] fill-white" />
-          </button>
-          <ProgressBar delay={delay} />
-        </div>
-      )}
+      <div
+        className={`relative flex h-[6rem] w-[30rem] overflow-hidden ${positionStyle[position].animation} items-center rounded-md p-4 ${statusStyle[status]}`}>
+        {displayIcon()}
+        <p className="ml-[1rem] text-[14px] text-white">{message}</p>
+        <button
+          onClick={() => closeToastMessage(id)}
+          className="absolute right-3 top-3 p-2">
+          <CloseIcon className="h-[1rem] w-[1rem] fill-white" />
+        </button>
+        <ProgressBar delay={delay} />
+      </div>
     </>
   );
 }
